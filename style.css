@@ -1,0 +1,291 @@
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Landing Screen */
+#landing {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    z-index: 100;
+}
+
+#landing h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: clamp(2rem, 8vw, 4rem);
+    margin-bottom: 2rem;
+    color: #F6C1CC;
+    text-align: center;
+    opacity: 1;
+}
+
+
+#soundNote {
+    margin-top: 2rem;
+    font-size: 1rem;
+    color: #FFE0B5;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+
+#startBtn {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(45deg, #F6C1CC, #C9C3E6);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    transition: 0.3s;
+    opacity: 1;
+}
+
+#startBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+}
+
+/* Canvas */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Flash Sequence Overlay */
+#flashOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    display: none;
+    /* hidden initially */
+}
+
+#flashText {
+    font-family: 'Quicksand', sans-serif;
+    font-size: clamp(3rem, 12vw, 6rem);
+    color: #FFE0B5;
+    opacity: 0;
+    text-align: center;
+}
+
+#flashHeader {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    background: linear-gradient(90deg, #F6C1CC, #FFE0B5, #C9C3E6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    transform: translateY(clamp(-70px, -12vw, -50px));
+    position: relative;
+    animation: pulseGlow 2s ease-in-out infinite alternate;
+    letter-spacing: 1px;
+
+}
+
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        transform: translateY(clamp(-70px, -12vw, -40px)) scale(1);
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    50% {
+        transform: translateY(clamp(-70px, -12vw, -40px)) scale(1.05);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+}
+
+/* Sparkles */
+.flash-sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0);
+}
+
+
+.confetti {
+    position: absolute;
+    border-radius: 50%;
+    /* make some round, or remove for square confetti */
+    pointer-events: none;
+    z-index: 200;
+}
+
+
+/* ============================
+   Birthday Card Page
+   ============================ */
+
+#birthdayCard {
+  position: fixed;
+  inset: 0;
+  display: none;                /* show when ready */
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1.2rem 5rem;  /* bottom space for button */
+  font-family: 'Montserrat', sans-serif;
+  color: #000;
+  z-index: 150;
+}
+
+/* Center block (title + message) */
+.card-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* 👈 vertical center */
+  align-items: center;       /* 👈 horizontal center */
+  text-align: center;
+  width: 100%;
+  pointer-events: auto;
+}
+.title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(7rem, 20vw, 12rem); /* space between top image and title */
+    z-index: 150;
+}
+
+/* ============================
+   Title
+   ============================ */
+
+#birthdayTitle {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(4rem, 12vw, 7rem);
+  line-height: 0.88;            /* 👈 tight vertical spacing */
+  margin: 0.6rem 0 1.2rem;
+  text-shadow: 0 0 14px rgba(255,255,255,0.45);
+}
+
+#birthdayTitle span {              
+  display: block;   /* each word on its own row */
+  z-index: 200;
+}
+
+/* ============================
+   Message text
+   ============================ */
+
+#birthdayCard p {
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  line-height: 1.4;
+  opacity: 0.9;
+  max-width: 28ch;              /* nice mobile width */
+  margin: 0;
+}
+
+/* ============================
+   Bottom Actions (Hint + Button)
+   ============================ */
+
+.bottom-actions {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 200;
+}
+
+/* Small hint text */
+
+.video-hint {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  opacity: 0.55;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* Small, subtle button */
+
+#videoBtn {
+  padding: 0.45rem 1.1rem;
+  font-size: 0.7rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.25);
+  color: #000;
+  border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 8px rgba(255,255,255,0.25);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#videoBtn:active {
+  transform: scale(0.96);
+}
+
+/* Frame images around birthday card */
+.frame-img {
+    position: absolute;
+    width: 100px;          /* adjust size */
+    height: 100px;         /* adjust size */
+    pointer-events: none;
+    z-index: 160;
+    object-fit: contain;
+    opacity: 0.9;
+    transform-origin: center center;
+}
+
+
+/* ============================
+   Desktop Enhancement (Optional)
+   ============================ */
+
+@media (min-width: 768px) {
+  #birthdayCard p {
+    font-size: 1.6rem;
+  }
+
+  #videoBtn {
+    font-size: 0.75rem;
+  }
+}
