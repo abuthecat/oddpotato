@@ -646,6 +646,8 @@ rightZone.classList.add('gallery-tap-zone', 'right');
 document.body.appendChild(leftZone);
 document.body.appendChild(rightZone);
 
+leftZone.style.display = 'none';
+rightZone.style.display = 'none';
 let galleryIndex = 0;
 
 videoBtn.addEventListener('click', () => {
@@ -654,7 +656,7 @@ videoBtn.addEventListener('click', () => {
     galleryContent.innerHTML = '';
     messageGallery.style.display = 'flex';
 
-    fadeBgMusic(0.15);
+    fadeBgMusic(0.125);
     // Show navigation zones only on non-mobile
     if (!isMobile) {
         leftZone.style.display = 'block';
