@@ -369,7 +369,7 @@ canvas {
   /* horizontal inside parent */
   width: auto;
   /* shrink to content width */
-  max-width: 600px;
+  max-width: 100%;
   height: 100%;
 }
 
@@ -445,11 +445,10 @@ canvas {
 .gallery-tap-zone {
   position: fixed;
   top: 0;
-  bottom: 0;
-  width: 50%;
-  z-index: 410;
-  display: none;
-  /* hidden initially */
+  width: 35%;
+  height: 100%;
+  z-index: 450;
+  cursor: pointer;
 }
 
 .gallery-tap-zone.left {
@@ -460,6 +459,24 @@ canvas {
   right: 0;
 }
 
+@media (hover: hover) {
+  .gallery-tap-zone:hover {
+    background: rgba(255,255,255,0.03);
+  }
+}
+
+
 .message-wrapper:has(.message-image):not(:has(.text-message)) {
   align-items: center;
+}
+
+/* Swipe animation helpers */
+.gallery-content {
+  overflow: hidden;
+  width: 100%;
+}
+
+.message-wrapper,
+.gallery-content video {
+  will-change: transform, opacity;
 }

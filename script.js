@@ -1,4 +1,4 @@
-const isMobile = window.innerHeight < 700; // detect small height screens
+const isMobile = window.matchMedia("(pointer: coarse)").matches; // detect small height screens
 const messages = [
     {
         type: "video",
@@ -229,9 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
     animSounds.forEach(sound => sound.volume = 0.5);
 
     const birthdayMessages = [
-        "Wishing you a life full of laughter, love, and endless happiness ✨💖",
-        "May your days be filled with joy, love, and wonderful moments, today and always 🌸✨",
-        "Here’s to a life of happiness, love, and all the good things that make you smile 🎉💖",
+        "Wishing you a life full of laughter, fun, and endless happiness ✨🎉",
+        "May your days be filled with joy, love, and wonderful experiences 🌸✨",
+        "Here’s to a life of happiness, success, and all the things that make you smile 🎉😊",
         "May your journey ahead be bright, joyful, and full of love 🌟✨",
         "Hoping your life is filled with laughter, love, and unforgettable moments 🥳💖"
     ];
@@ -633,7 +633,8 @@ document.addEventListener("visibilitychange", () => {
 
 
 
-// ===== Message Gallery =====const videoBtn = document.getElementById('videoBtn');
+// ===== Message Gallery =====
+const videoBtn = document.getElementById('videoBtn');
 const messageGallery = document.getElementById('messageGallery');
 const galleryContent = document.querySelector('.gallery-content');
 
@@ -654,9 +655,14 @@ videoBtn.addEventListener('click', () => {
     messageGallery.style.display = 'flex';
 
     fadeBgMusic(0.15);
-
-    leftZone.style.display = 'block';
-    rightZone.style.display = 'block';
+    // Show navigation zones only on non-mobile
+    if (!isMobile) {
+        leftZone.style.display = 'block';
+        rightZone.style.display = 'block';
+    } else {
+        leftZone.style.display = 'none';
+        rightZone.style.display = 'none';
+    }
 
     showMessage();
 
@@ -766,3 +772,104 @@ rightZone.addEventListener('click', () => {
     galleryIndex++;
     showMessage();
 });
+
+
+let startX = 0;
+let currentX = 0;
+let isSwiping = false;
+const swipeThreshold = 60; // px needed to trigger swipe
+
+if (isMobile) {
+    messageGallery.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+        isSwiping = true;
+    });
+
+    messageGallery.addEventListener('touchmove', e => {
+        if (!isSwiping) return;
+        currentX = e.touches[0].clientX;
+    });
+
+    messageGallery.addEventListener('touchend', () => {
+        if (!isSwiping) return;
+
+        const deltaX = currentX - startX;
+        isSwiping = false;
+
+        if (Math.abs(deltaX) < swipeThreshold) return;
+
+        if (deltaX < 0) swipeNext();
+        else swipePrev();
+    });
+}
+
+
+
+function swipeNext() {
+    if (galleryIndex >= messages.length) return;
+
+    animateOut(-1, () => {
+        galleryIndex++;
+        showMessage();
+        animateIn(1);
+    });
+}
+
+function swipePrev() {
+    if (galleryIndex <= 0) return;
+
+    animateOut(1, () => {
+        galleryIndex--;
+        showMessage();
+        animateIn(-1);
+    });
+}
+
+document.addEventListener('keydown', (e) => {
+    if (isMobile) return;
+    if (messageGallery.style.display !== 'flex') return;
+
+    if (e.key === 'ArrowRight') swipeNext();
+    if (e.key === 'ArrowLeft') swipePrev();
+});
+
+
+function animateOut(direction, onComplete) {
+    const el = galleryContent.firstElementChild;
+    if (!el) return;
+
+    gsap.to(el, {
+        x: direction * 100,
+        opacity: 0,
+        duration: 0.35,
+        ease: "power2.in",
+        onComplete
+    });
+}
+
+function animateIn(direction) {
+    const el = galleryContent.firstElementChild;
+    if (!el) return;
+
+    gsap.fromTo(el,
+        { x: direction * -100, opacity: 0 },
+        {
+            x: 0,
+            opacity: 1,
+            duration: 0.45,
+            ease: "power2.out"
+        }
+    );
+}
+
+
+messageGallery.addEventListener('touchmove', e => {
+    if (!isSwiping) return;
+    currentX = e.touches[0].clientX;
+    const deltaY = e.touches[0].clientY - e.touches[0].clientY;
+    const deltaX = currentX - startX;
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // Horizontal swipe → prevent scrolling
+        e.preventDefault();
+    }
+}, { passive: false });
