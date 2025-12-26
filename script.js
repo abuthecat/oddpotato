@@ -1,5 +1,42 @@
 const isMobile = window.innerHeight < 700; // detect small height screens
+const messages = [
+    {
+        type: "video",
+        src: "assets/messages/phoebi.mov",
+        name: "Phoebi"
+    },
+    {
+        type: "text",
+        image: "assets/messages/nana.png"
 
+    }
+    // {
+    //     type: "text",
+    //     text: "May all your dreams slowly come true ✨",
+    //     name: "Hafiz"
+    // }
+];
+
+// ===== Audio Setup =====
+const bgMusic = new Audio('assets/music/birthday_song.mp3');
+bgMusic.volume = 0.3;
+bgMusic.loop = true;
+
+function fadeBgMusic(target, duration = 300) {
+    const start = bgMusic.volume;
+    const steps = 20;
+    let step = 0;
+
+    const interval = setInterval(() => {
+        step++;
+        bgMusic.volume = start + (target - start) * (step / steps);
+
+        if (step >= steps) {
+            bgMusic.volume = target;
+            clearInterval(interval);
+        }
+    }, duration / steps);
+}
 document.addEventListener('DOMContentLoaded', () => {
 
     // Helper to get ordinal suffix
@@ -178,10 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { opacity: 1, y: 0, scale: 1, duration: 1, delay: 0.6, ease: "power2.out" }
     );
 
-    // ===== Audio Setup =====
-    const bgMusic = new Audio('assets/music/birthday_song.mp3');
-    bgMusic.volume = 0.3;
-    bgMusic.loop = true;
 
     const animSounds = [
         new Audio('assets/music/pop-3.mp3'),
@@ -596,4 +629,140 @@ document.addEventListener("visibilitychange", () => {
     } else {
         gsap.globalTimeline.resume();
     }
+});
+
+
+
+// ===== Message Gallery =====const videoBtn = document.getElementById('videoBtn');
+const messageGallery = document.getElementById('messageGallery');
+const galleryContent = document.querySelector('.gallery-content');
+
+// Invisible tap zones for left/right navigation
+let leftZone = document.createElement('div');
+leftZone.classList.add('gallery-tap-zone', 'left');
+let rightZone = document.createElement('div');
+rightZone.classList.add('gallery-tap-zone', 'right');
+document.body.appendChild(leftZone);
+document.body.appendChild(rightZone);
+
+let galleryIndex = 0;
+
+videoBtn.addEventListener('click', () => {
+    // Reset gallery
+    galleryIndex = 0;
+    galleryContent.innerHTML = '';
+    messageGallery.style.display = 'flex';
+
+    fadeBgMusic(0.15);
+
+    leftZone.style.display = 'block';
+    rightZone.style.display = 'block';
+
+    showMessage();
+
+    // // Play surprise video first
+    // const firstVideo = document.createElement('video');
+    // firstVideo.src = messages[0].src;
+    // firstVideo.autoplay = true;
+    // firstVideo.controls = false;
+    // firstVideo.style.maxHeight = '70vh';
+    // galleryContent.appendChild(firstVideo);
+
+    // firstVideo.addEventListener('ended', () => {
+    //     galleryIndex = 1; // start from second message
+    //     showMessage();
+    //     leftZone.style.display = 'block';
+    //     rightZone.style.display = 'block';
+    // });
+});
+function showMessage() {
+    // 🔴 END OF GALLERY → CLOSE EVERYTHING
+    if (galleryIndex >= messages.length) {
+        messageGallery.style.display = 'none';
+        galleryContent.innerHTML = '';
+
+        // hide navigation zones
+        leftZone.style.display = 'none';
+        rightZone.style.display = 'none';
+
+        fadeBgMusic(0.3); // 🔊 restore volume
+        return;
+    }
+
+    galleryContent.innerHTML = '';
+    const msg = messages[galleryIndex];
+
+    // 🎥 VIDEO MESSAGE
+    if (msg.type === 'video') {
+        const vid = document.createElement('video');
+        vid.src = msg.src;
+        vid.autoplay = true;
+        vid.controls = true;
+        vid.style.maxHeight = '70vh';
+        vid.style.maxWidth = '100%';
+
+        vid.addEventListener('ended', () => {
+            galleryIndex++;
+            showMessage();
+        });
+
+        galleryContent.appendChild(vid);
+        return;
+    }
+
+
+    // 📝 TEXT / IMAGE MESSAGE
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('message-wrapper');
+
+    const hasText = msg.text && msg.text.trim() !== '';
+    const hasImage = !!msg.image;
+
+    // 🔥 mark image-only messages
+    if (hasImage && !hasText) {
+        wrapper.classList.add('image-only');
+    }
+
+
+    // Image
+    if (hasImage) {
+        const img = document.createElement('img');
+        img.src = msg.image;
+        img.alt = msg.name || 'message image';
+        img.classList.add('message-image');
+        wrapper.appendChild(img);
+    }
+
+    // Text (only if it exists)
+    if (hasText) {
+        const txt = document.createElement('div');
+        txt.classList.add('text-message');
+        txt.textContent = msg.text;
+        wrapper.appendChild(txt);
+    }
+
+    // Author (optional)
+    if (msg.name) {
+        const author = document.createElement('div');
+        author.classList.add('text-author');
+        author.textContent = `— ${msg.name}`;
+        wrapper.appendChild(author);
+    }
+
+    galleryContent.appendChild(wrapper);
+
+}
+
+// Left / right navigation
+leftZone.addEventListener('click', () => {
+    if (galleryIndex > 0) {
+        galleryIndex--;
+        showMessage();
+    }
+});
+
+
+rightZone.addEventListener('click', () => {
+    galleryIndex++;
+    showMessage();
 });

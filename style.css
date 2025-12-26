@@ -1,155 +1,155 @@
 /* Reset & Base */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html,
 body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Inter', sans-serif;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Landing Screen */
 #landing {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #000;
-    z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  z-index: 100;
 }
 
 #landing h1 {
-    font-family: 'Quicksand', sans-serif;
-    font-size: clamp(2rem, 8vw, 4rem);
-    margin-bottom: 2rem;
-    color: #F6C1CC;
-    text-align: center;
-    opacity: 1;
+  font-family: 'Quicksand', sans-serif;
+  font-size: clamp(2rem, 8vw, 4rem);
+  margin-bottom: 2rem;
+  color: #F6C1CC;
+  text-align: center;
+  opacity: 1;
 }
 
 
 #soundNote {
-    margin-top: 2rem;
-    font-size: 1rem;
-    color: #FFE0B5;
-    text-align: center;
-    font-family: 'Quicksand', sans-serif;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: #FFE0B5;
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
 
 #startBtn {
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(45deg, #F6C1CC, #C9C3E6);
-    color: #fff;
-    cursor: pointer;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    transition: 0.3s;
-    opacity: 1;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(45deg, #F6C1CC, #C9C3E6);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  transition: 0.3s;
+  opacity: 1;
 }
 
 #startBtn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
 }
 
 /* Canvas */
 canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* Flash Sequence Overlay */
 #flashOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 200;
-    display: none;
-    /* hidden initially */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  display: none;
+  /* hidden initially */
 }
 
 #flashText {
-    font-family: 'Quicksand', sans-serif;
-    font-size: clamp(3rem, 12vw, 6rem);
-    color: #FFE0B5;
-    opacity: 0;
-    text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  font-size: clamp(3rem, 12vw, 6rem);
+  color: #FFE0B5;
+  opacity: 0;
+  text-align: center;
 }
 
 #flashHeader {
-    font-family: 'Great Vibes', cursive;
-    font-size: clamp(1.5rem, 5vw, 3rem);
-    background: linear-gradient(90deg, #F6C1CC, #FFE0B5, #C9C3E6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-    transform: translateY(clamp(-70px, -12vw, -50px));
-    position: relative;
-    animation: pulseGlow 2s ease-in-out infinite alternate;
-    letter-spacing: 1px;
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  background: linear-gradient(90deg, #F6C1CC, #FFE0B5, #C9C3E6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  transform: translateY(clamp(-70px, -12vw, -50px));
+  position: relative;
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+  letter-spacing: 1px;
 
 }
 
 
 @keyframes pulseGlow {
 
-    0%,
-    100% {
-        transform: translateY(clamp(-70px, -12vw, -40px)) scale(1);
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-    }
+  0%,
+  100% {
+    transform: translateY(clamp(-70px, -12vw, -40px)) scale(1);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  }
 
-    50% {
-        transform: translateY(clamp(-70px, -12vw, -40px)) scale(1.05);
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
+  50% {
+    transform: translateY(clamp(-70px, -12vw, -40px)) scale(1.05);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
 }
 
 /* Sparkles */
 .flash-sparkle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: #fff;
-    border-radius: 50%;
-    pointer-events: none;
-    opacity: 0;
-    transform: scale(0);
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0);
 }
 
 
 .confetti {
-    position: absolute;
-    border-radius: 50%;
-    /* make some round, or remove for square confetti */
-    pointer-events: none;
-    z-index: 200;
+  position: absolute;
+  border-radius: 50%;
+  /* make some round, or remove for square confetti */
+  pointer-events: none;
+  z-index: 200;
 }
 
 
@@ -160,46 +160,54 @@ canvas {
 #birthdayCard {
   position: fixed;
   inset: 0;
-  display: none;                /* show when ready */
+  display: none;
+  /* show when ready */
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 1.5rem 1.2rem 5rem;  /* bottom space for button */
+  padding: 1.5rem 1.2rem 5rem;
+  /* bottom space for button */
   font-family: 'Montserrat', sans-serif;
   color: #000;
   z-index: 150;
 }
+
 #loopBtn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 250;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #F6C1CC; /* solid pastel color for simplicity */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s ease, background 0.2s ease;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 250;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #F6C1CC;
+  /* solid pastel color for simplicity */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 #loopBtn:hover {
-    transform: scale(1.1); /* subtle hover */
-    background: #C9C3E6;   /* gentle color change */
+  transform: scale(1.1);
+  /* subtle hover */
+  background: #C9C3E6;
+  /* gentle color change */
 }
 
 #loopBtn:active {
-    transform: scale(0.95); /* subtle press effect */
+  transform: scale(0.95);
+  /* subtle press effect */
 }
 
 #loopBtn svg {
-    width: 24px;
-    height: 24px;
-    fill: white; /* icon color */
-    transition: transform 0.2s ease;
+  width: 24px;
+  height: 24px;
+  fill: white;
+  /* icon color */
+  transition: transform 0.2s ease;
 }
 
 
@@ -209,18 +217,22 @@ canvas {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* 👈 vertical center */
-  align-items: center;       /* 👈 horizontal center */
+  justify-content: center;
+  /* 👈 vertical center */
+  align-items: center;
+  /* 👈 horizontal center */
   text-align: center;
   width: 100%;
   pointer-events: auto;
 }
+
 .title-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(7rem, 20vw, 12rem); /* space between top image and title */
-    z-index: 150;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(7rem, 20vw, 12rem);
+  /* space between top image and title */
+  z-index: 150;
 }
 
 /* ============================
@@ -230,13 +242,15 @@ canvas {
 #birthdayTitle {
   font-family: 'Great Vibes', cursive;
   font-size: clamp(4rem, 12vw, 7rem);
-  line-height: 0.88;            /* 👈 tight vertical spacing */
+  line-height: 0.88;
+  /* 👈 tight vertical spacing */
   margin: 0.6rem 0 1.2rem;
-  text-shadow: 0 0 14px rgba(255,255,255,0.45);
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.45);
 }
 
-#birthdayTitle span {              
-  display: block;   /* each word on its own row */
+#birthdayTitle span {
+  display: block;
+  /* each word on its own row */
   z-index: 200;
 }
 
@@ -248,7 +262,8 @@ canvas {
   font-size: clamp(1rem, 4vw, 1.5rem);
   line-height: 1.4;
   opacity: 0.9;
-  max-width: 28ch;              /* nice mobile width */
+  max-width: 28ch;
+  /* nice mobile width */
   margin: 0;
 }
 
@@ -286,9 +301,9 @@ canvas {
   border-radius: 999px;
   background: rgba(74, 52, 170, 0.185);
   color: #000;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(6px);
-  box-shadow: 0 0 8px rgba(255,255,255,0.25);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease;
 }
@@ -299,14 +314,16 @@ canvas {
 
 /* Frame images around birthday card */
 .frame-img {
-    position: absolute;
-    width: 100px;          /* adjust size */
-    height: 100px;         /* adjust size */
-    pointer-events: none;
-    z-index: 160;
-    object-fit: contain;
-    opacity: 0.9;
-    transform-origin: center center;
+  position: absolute;
+  width: 100px;
+  /* adjust size */
+  height: 100px;
+  /* adjust size */
+  pointer-events: none;
+  z-index: 160;
+  object-fit: contain;
+  opacity: 0.9;
+  transform-origin: center center;
 }
 
 
@@ -322,4 +339,127 @@ canvas {
   #videoBtn {
     font-size: 0.75rem;
   }
+}
+
+/* ============================
+   Message Gallery Overlay
+   ============================ */
+#messageGallery {
+  display: none;
+  /* hide initially */
+  position: fixed;
+  inset: 0;
+  min-height: 100dvh;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 400;
+
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+
+.gallery-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* vertical inside parent */
+  align-items: center;
+  /* horizontal inside parent */
+  width: auto;
+  /* shrink to content width */
+  max-width: 600px;
+  height: 100%;
+}
+
+.gallery-content video {
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+
+.gallery-content video {
+  width: 100%;
+  max-height: 100%;
+  border-radius: 16px;
+}
+
+
+.message-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 90vw;
+}
+
+.message-image {
+  max-width: 70vw;
+  max-height: 35vh;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* 🔥 IMAGE-ONLY MESSAGES — BIG & PROUD */
+.message-wrapper.image-only .message-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Desktop refinement */
+@media (min-width: 768px) {
+  .message-wrapper.image-only .message-image {
+    max-width: 80vw;
+    max-height: 90vh;
+  }
+}
+
+.text-message {
+  font-family: 'Fuzzy Bubbles', sans-serif;
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.2;
+  color: #fff;
+}
+
+.text-author {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.gallery-hint {
+  position: fixed;
+  bottom: 20px;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  opacity: 0.5;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* Invisible tap zones */
+.gallery-tap-zone {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 410;
+  display: none;
+  /* hidden initially */
+}
+
+.gallery-tap-zone.left {
+  left: 0;
+}
+
+.gallery-tap-zone.right {
+  right: 0;
+}
+
+.message-wrapper:has(.message-image):not(:has(.text-message)) {
+  align-items: center;
 }
