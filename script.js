@@ -1,4 +1,6 @@
 const isMobile = window.matchMedia("(pointer: coarse)").matches; // detect small height screens
+let isImageViewerOpen = false;
+
 const messages = [
     {
         type: "video",
@@ -749,8 +751,31 @@ function showMessage() {
         img.src = msg.image;
         img.alt = msg.name || 'message image';
         img.classList.add('message-image');
+
+        // 🔍 enable tap-to-zoom only for image-only messages
+        if (!hasText) {
+            img.classList.add('zoomable');
+
+            img.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // 🚫 STOP slide trigger
+                openImageViewer(msg.image);
+            });
+
+            // 🔒 Stop swipe from starting on image
+            img.addEventListener('touchstart', e => {
+                e.stopPropagation();
+            }, { passive: true });
+
+            img.addEventListener('touchmove', e => {
+                e.stopPropagation();
+            }, { passive: true });
+        }
+
+
         wrapper.appendChild(img);
     }
+
 
     // Text (only if it exists)
     if (hasText) {
@@ -780,14 +805,15 @@ function showMessage() {
 
 // Left / right navigation
 leftZone.addEventListener('click', () => {
+    if (isImageViewerOpen) return;
     if (galleryIndex > 0) {
         galleryIndex--;
         showMessage();
     }
 });
 
-
 rightZone.addEventListener('click', () => {
+    if (isImageViewerOpen) return;
     galleryIndex++;
     showMessage();
 });
@@ -800,17 +826,22 @@ const swipeThreshold = 60; // px needed to trigger swipe
 
 if (isMobile) {
     messageGallery.addEventListener('touchstart', e => {
+        if (isImageViewerOpen) return;
+
+        // 🧠 If touching zoomable image, do NOT start swipe
+        if (e.target.closest('.zoomable')) return;
+
         startX = e.touches[0].clientX;
         isSwiping = true;
     });
 
     messageGallery.addEventListener('touchmove', e => {
-        if (!isSwiping) return;
+        if (!isSwiping || isImageViewerOpen) return;
         currentX = e.touches[0].clientX;
     });
 
     messageGallery.addEventListener('touchend', () => {
-        if (!isSwiping) return;
+        if (!isSwiping || isImageViewerOpen) return;
 
         const deltaX = currentX - startX;
         isSwiping = false;
@@ -820,11 +851,12 @@ if (isMobile) {
         if (deltaX < 0) swipeNext();
         else swipePrev();
     });
+
 }
 
 
-
 function swipeNext() {
+    if (isImageViewerOpen) return;
     if (galleryIndex >= messages.length) return;
 
     animateOut(-1, () => {
@@ -835,6 +867,7 @@ function swipeNext() {
 }
 
 function swipePrev() {
+    if (isImageViewerOpen) return;
     if (galleryIndex <= 0) return;
 
     animateOut(1, () => {
@@ -844,9 +877,11 @@ function swipePrev() {
     });
 }
 
+
 document.addEventListener('keydown', (e) => {
     if (isMobile) return;
     if (messageGallery.style.display !== 'flex') return;
+    if (isImageViewerOpen) return;
 
     if (e.key === 'ArrowRight') swipeNext();
     if (e.key === 'ArrowLeft') swipePrev();
@@ -893,3 +928,34 @@ messageGallery.addEventListener('touchmove', e => {
         e.preventDefault();
     }
 }, { passive: false });
+
+function openImageViewer(src) {
+    isImageViewerOpen = true; // 🔒 lock gallery
+
+    const overlay = document.createElement('div');
+    overlay.className = 'image-viewer';
+
+    const img = document.createElement('img');
+    img.src = src;
+
+    overlay.appendChild(img);
+    document.body.appendChild(overlay);
+
+    // prevent background scrolling
+    document.body.style.overflow = 'hidden';
+
+    // ⛔ disable tap zones while fullscreen
+    leftZone.style.pointerEvents = 'none';
+    rightZone.style.pointerEvents = 'none';
+
+    overlay.addEventListener('click', () => {
+        overlay.remove();
+        document.body.style.overflow = '';
+
+        // 🔓 unlock gallery
+        isImageViewerOpen = false;
+
+        leftZone.style.pointerEvents = '';
+        rightZone.style.pointerEvents = '';
+    });
+}
