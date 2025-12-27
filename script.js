@@ -7,7 +7,8 @@ const messages = [
     },
     {
         type: "text",
-        image: "assets/messages/nana.png"
+        image: "assets/messages/nana.png",
+        name: "Nana"
 
     },
     {
@@ -15,7 +16,16 @@ const messages = [
         text: "Happy birthday Ieqa!! Apologies for being unable to record a video as I am still recovering from a horrible viral fever, my voice is goneee 🤣 wishing you a very happy and blessed birthday 🎂🎈 catch up soon!!",
         image: "assets/messages/jon.png",
         name: "Jon"
-    }
+    },
+    {
+        type: "text",
+        text: `Happy Birthday, Potato. \n
+                You are now a year older than before. May you live long and happy. And may you stop attracting red flags and toxic people from approaching you. May you one day be able to confidently say no and not feel bad about it. You can be kind and emphatic and that's a good thing but you should never let people use that as a weapon against you. You should also be kind and emphatic to yourself. Don't allow yourself to get hurt by others.\n
+                May you continue to grow as a stronger person than you were before. You've done better then when you were 10 years ago. And I hope you will continue to do better 10 years from now too.`,
+        image: "assets/messages/ryn.jpeg",
+        name: "Ryn",
+        long: true
+    },
 ];
 
 // ===== Audio Setup =====
@@ -746,9 +756,15 @@ function showMessage() {
     if (hasText) {
         const txt = document.createElement('div');
         txt.classList.add('text-message');
+
+        if (msg.long) {
+            txt.classList.add('long-message');
+        }
+
         txt.textContent = msg.text;
         wrapper.appendChild(txt);
     }
+
 
     // Author (optional)
     if (msg.name) {
@@ -868,11 +884,12 @@ function animateIn(direction) {
 
 messageGallery.addEventListener('touchmove', e => {
     if (!isSwiping) return;
-    currentX = e.touches[0].clientX;
-    const deltaY = e.touches[0].clientY - e.touches[0].clientY;
+
     const deltaX = currentX - startX;
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        // Horizontal swipe → prevent scrolling
+    const deltaY = e.touches[0].clientY - e.touches[0].clientY;
+
+    // Only block scrolling if horizontal swipe is dominant
+    if (Math.abs(deltaX) > Math.abs(deltaY) && !e.target.closest('.long-message')) {
         e.preventDefault();
     }
 }, { passive: false });
