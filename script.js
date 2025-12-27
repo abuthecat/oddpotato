@@ -9,12 +9,13 @@ const messages = [
         type: "text",
         image: "assets/messages/nana.png"
 
+    },
+    {
+        type: "text",
+        text: "Happy birthday Ieqa!! Apologies for being unable to record a video as I am still recovering from a horrible viral fever, my voice is goneee 🤣 wishing you a very happy and blessed birthday 🎂🎈 catch up soon!!",
+        image: "assets/messages/jon.png",
+        name: "Jon"
     }
-    // {
-    //     type: "text",
-    //     text: "May all your dreams slowly come true ✨",
-    //     name: "Hafiz"
-    // }
 ];
 
 // ===== Audio Setup =====
